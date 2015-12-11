@@ -14,11 +14,11 @@
 框架说明
 ===============
 
->. 一个Swift文件快速集成类似新浪微博，微信朋友圈相册添加、编辑、展示视图。
->. 支持Xib，支持纯代码。支持autoLayout。
->. 动态高度回调。
->. 针对tableview以及collectionView做了大量性能优化。
->. 支持事件回调。
+>. 一个Swift文件快速集成类似新浪微博，微信朋友圈相册添加、编辑、展示视图。<br/> 
+>. 支持Xib，支持纯代码。支持autoLayout。<br/> 
+>. 动态高度回调。<br/> 
+>. 针对tableview以及collectionView做了大量性能优化。<br/> 
+>. 支持事件回调。<br/> 
 
 
 注：请直接拖拽SinaPhotoView文件夹到你的项目即可，不支持pod。
