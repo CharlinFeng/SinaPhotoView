@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		89FBA9A81C1A741900E3EA09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FBA9A71C1A741900E3EA09 /* AppDelegate.swift */; };
+		89FBA9AA1C1A741900E3EA09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FBA9A91C1A741900E3EA09 /* ViewController.swift */; };
+		89FBA9AD1C1A741A00E3EA09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FBA9AB1C1A741A00E3EA09 /* Main.storyboard */; };
+		89FBA9AF1C1A741A00E3EA09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89FBA9AE1C1A741A00E3EA09 /* Assets.xcassets */; };
+		89FBA9B21C1A741A00E3EA09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89FBA9B01C1A741A00E3EA09 /* LaunchScreen.storyboard */; };
+		89FBA9BB1C1A747000E3EA09 /* SinaPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FBA9BA1C1A747000E3EA09 /* SinaPhotoView.swift */; };
+		89FBA9BD1C1A777E00E3EA09 /* SinaPhotoView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 89FBA9BC1C1A777E00E3EA09 /* SinaPhotoView.bundle */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		89FBA9A41C1A741900E3EA09 /* SinaPhotoView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SinaPhotoView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89FBA9A71C1A741900E3EA09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		89FBA9A91C1A741900E3EA09 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		89FBA9AC1C1A741A00E3EA09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		89FBA9AE1C1A741A00E3EA09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		89FBA9B11C1A741A00E3EA09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89FBA9B31C1A741A00E3EA09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89FBA9BA1C1A747000E3EA09 /* SinaPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaPhotoView.swift; sourceTree = "<group>"; };
+		89FBA9BC1C1A777E00E3EA09 /* SinaPhotoView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaPhotoView.bundle; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		89FBA9A11C1A741900E3EA09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		89FBA99B1C1A741900E3EA09 = {
+			isa = PBXGroup;
+			children = (
+				89FBA9A61C1A741900E3EA09 /* SinaPhotoView */,
+				89FBA9A51C1A741900E3EA09 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		89FBA9A51C1A741900E3EA09 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89FBA9A41C1A741900E3EA09 /* SinaPhotoView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		89FBA9A61C1A741900E3EA09 /* SinaPhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				89FBA9B91C1A746100E3EA09 /* SinaPhotoView */,
+				89FBA9A71C1A741900E3EA09 /* AppDelegate.swift */,
+				89FBA9A91C1A741900E3EA09 /* ViewController.swift */,
+				89FBA9AB1C1A741A00E3EA09 /* Main.storyboard */,
+				89FBA9AE1C1A741A00E3EA09 /* Assets.xcassets */,
+				89FBA9B01C1A741A00E3EA09 /* LaunchScreen.storyboard */,
+				89FBA9B31C1A741A00E3EA09 /* Info.plist */,
+			);
+			path = SinaPhotoView;
+			sourceTree = "<group>";
+		};
+		89FBA9B91C1A746100E3EA09 /* SinaPhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				89FBA9BA1C1A747000E3EA09 /* SinaPhotoView.swift */,
+				89FBA9BC1C1A777E00E3EA09 /* SinaPhotoView.bundle */,
+			);
+			path = SinaPhotoView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		89FBA9A31C1A741900E3EA09 /* SinaPhotoView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89FBA9B61C1A741A00E3EA09 /* Build configuration list for PBXNativeTarget "SinaPhotoView" */;
+			buildPhases = (
+				89FBA9A01C1A741900E3EA09 /* Sources */,
+				89FBA9A11C1A741900E3EA09 /* Frameworks */,
+				89FBA9A21C1A741900E3EA09 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SinaPhotoView;
+			productName = SinaPhotoView;
+			productReference = 89FBA9A41C1A741900E3EA09 /* SinaPhotoView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89FBA99C1C1A741900E3EA09 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "冯成林";
+				TargetAttributes = {
+					89FBA9A31C1A741900E3EA09 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 89FBA99F1C1A741900E3EA09 /* Build configuration list for PBXProject "SinaPhotoView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 89FBA99B1C1A741900E3EA09;
+			productRefGroup = 89FBA9A51C1A741900E3EA09 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				89FBA9A31C1A741900E3EA09 /* SinaPhotoView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		89FBA9A21C1A741900E3EA09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89FBA9BD1C1A777E00E3EA09 /* SinaPhotoView.bundle in Resources */,
+				89FBA9B21C1A741A00E3EA09 /* LaunchScreen.storyboard in Resources */,
+				89FBA9AF1C1A741A00E3EA09 /* Assets.xcassets in Resources */,
+				89FBA9AD1C1A741A00E3EA09 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		89FBA9A01C1A741900E3EA09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89FBA9BB1C1A747000E3EA09 /* SinaPhotoView.swift in Sources */,
+				89FBA9AA1C1A741900E3EA09 /* ViewController.swift in Sources */,
+				89FBA9A81C1A741900E3EA09 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		89FBA9AB1C1A741A00E3EA09 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89FBA9AC1C1A741A00E3EA09 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		89FBA9B01C1A741A00E3EA09 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89FBA9B11C1A741A00E3EA09 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		89FBA9B41C1A741A00E3EA09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		89FBA9B51C1A741A00E3EA09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		89FBA9B71C1A741A00E3EA09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SinaPhotoView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ShiDian.SinaPhotoView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		89FBA9B81C1A741A00E3EA09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SinaPhotoView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ShiDian.SinaPhotoView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		89FBA99F1C1A741900E3EA09 /* Build configuration list for PBXProject "SinaPhotoView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89FBA9B41C1A741A00E3EA09 /* Debug */,
+				89FBA9B51C1A741A00E3EA09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89FBA9B61C1A741A00E3EA09 /* Build configuration list for PBXNativeTarget "SinaPhotoView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89FBA9B71C1A741A00E3EA09 /* Debug */,
+				89FBA9B81C1A741A00E3EA09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 89FBA99C1C1A741900E3EA09 /* Project object */;
+}
