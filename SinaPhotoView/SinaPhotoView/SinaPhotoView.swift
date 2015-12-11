@@ -27,13 +27,13 @@ class SinaPhotoView: UIView {
 
     /** interface */
     var isEditView: Bool! {didSet{sinaPhotoViewPrepare()}}
-    
     var addBtnClosure:(Void->(PhotoModel!))!
     var maxHeightCalOutClosure:(CGFloat->Void)!
     var photoModels: [PhotoModel]! {
         get{return photoModels_private.filter({$0 != nil})}
         set{photoModels_private = newValue; }
     }
+    var tapClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
 
     lazy var margin: CGFloat = 5
     lazy var colCount: CGFloat = 3
@@ -73,11 +73,18 @@ extension SinaPhotoView {
         imageView.photoModel = photoModel
         imageView.image = photoModel?.img
         if isEditView! {photoModels_private.append(photoModel!)}
-        
+        imageView.userInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
         imageView.layer.borderWidth=1
         addSubview(imageView)
         if isEditView! {addDeleteBtn(imageView)}else{imageView.hidden = true}
     
+    }
+    
+    func tap(tap: UITapGestureRecognizer){
+        let imageView = tap.view as! PhotoImgView
+        
+        tapClosure?(i: imageView.tag, imageView: imageView, photoModel: imageView.photoModel)
     }
     
     func addDeleteBtn(imageView: UIImageView){
@@ -117,6 +124,7 @@ extension SinaPhotoView {
         for (var i=0; i<count; i++){
           
             weak var subView = subviews.reverse()[i]
+            subView?.tag = i
             let row: CGFloat = CGFloat(Int(CGFloat(i) % colCount_Cal))
             let col: CGFloat = CGFloat(Int(CGFloat(i) / colCount_Cal))
             let x = row * (wh + margin)

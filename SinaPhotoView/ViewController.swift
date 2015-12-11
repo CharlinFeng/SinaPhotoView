@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         }
         
         editView.addBtnClosure = {
-            print("ok")
+           
             return SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
         }
         
@@ -45,6 +45,13 @@ class ViewController: UIViewController {
         }
         
         
+        editView.tapClosure = {(i,v,m) in
+            print(i)
+        }
+        
+        showView.tapClosure = {(i,v,m) in
+            print(i)
+        }
         
     }
     
