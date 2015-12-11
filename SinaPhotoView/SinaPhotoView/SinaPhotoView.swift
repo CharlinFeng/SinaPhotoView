@@ -138,6 +138,7 @@ extension SinaPhotoView {
                     subView!.hidden = i > photoModels.count - 1
                     if i == photoModels.count - 1 {maxH = CGRectGetMaxY(subView!.frame);maxHeightCalOutClosure?(maxH)}
                 }
+                subView!.contentMode = photoModels.count == 1 ? UIViewContentMode.ScaleAspectFit : UIViewContentMode.ScaleAspectFill
             }
             
             if isEditView! && i == count - 1 && i<10 {maxHeightCalOutClosure?(maxH)}
