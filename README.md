@@ -56,12 +56,24 @@
 
         editView.addBtnClosure = {
            
-            return SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
+        }
+        
+        
+#### 4. 批量添加图片数据：
+
+        mgr.finishPickingMedia = { [unowned self] medias in
+            
+            let photoModels = medias.map({SinaPhotoView.PhotoModel(img: $0.editedImage, interfaceModel: nil)})
+            
+            //批量添加
+            self.photoView.addPhotoModels(photoModels)
         }
         
 
+
+
 <br/><br/>
-#### 4. 点击图片事件回调：请执行您的照片浏览器展示操作
+#### 5. 点击图片事件回调：请执行您的照片浏览器展示操作
         showView.tapClosure = {(i,v,m) in
             print(i)
         }
