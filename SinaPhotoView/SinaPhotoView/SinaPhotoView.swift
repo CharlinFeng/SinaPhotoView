@@ -27,13 +27,14 @@ class SinaPhotoView: UIView {
 
     /** interface */
     var isEditView: Bool! {didSet{sinaPhotoViewPrepare()}}
-    var addBtnClosure:(Void->(PhotoModel!))!
+    var addBtnClosure:(Void->Void)!
     var maxHeightCalOutClosure:(CGFloat->Void)!
     var photoModels: [PhotoModel]! {
         get{return photoModels_private.filter({$0 != nil})}
         set{photoModels_private = newValue; }
     }
     var tapClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
+    func addPhotoModels(photoModels: [PhotoModel]!){for (_,pm) in photoModels.enumerate(){addImageView(false, photoModel: pm)}}
 
     lazy var margin: CGFloat = 5
     lazy var colCount: CGFloat = 3
@@ -50,10 +51,10 @@ extension SinaPhotoView {
         
         layer.borderWidth=0.5; layer.borderColor = UIColor.brownColor().CGColor
         
-        if !isEditView {for (var i=0; i<9; i++){addImageView(true)}; return}
+        if !isEditView {for (var i=0; i<9; i++){addImageView(true,photoModel: nil)}; return}
 
         addBtn.tintColor = UIColor.lightGrayColor() ; addBtn.setImage(UIImage(named: "SinaPhotoView.bundle/add"), forState: UIControlState.Normal)
-        addBtn.addTarget(self, action: "addImageView:", forControlEvents: UIControlEvents.TouchUpInside)
+        addBtn.addTarget(self, action: "clickAddBtn", forControlEvents: UIControlEvents.TouchUpInside)
         addSubview(addBtn)
     }
     
@@ -63,16 +64,18 @@ extension SinaPhotoView {
         layoutIfNeeded()
     }
     
+    /** 点击事件 */
+    func clickAddBtn(){addBtnClosure?()}
+    
     /** add */
-    func addImageView(isShowView: Bool = false){
+    func addImageView(isShowView: Bool = false, photoModel: PhotoModel!){
         
         if (isEditView!) {handleAddBtn()};
         let imageView = PhotoImgView();
         imageView.userInteractionEnabled=true
-        let photoModel = addBtnClosure?();
         imageView.photoModel = photoModel
-        imageView.image = photoModel?.img
-        if isEditView! {photoModels_private.append(photoModel!)}
+        imageView.image = photoModel.img
+        if isEditView! {photoModels_private.append(photoModel)}
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
         imageView.layer.borderWidth=1

@@ -22,7 +22,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //明确指明类型，否则触发断言
+        //编辑模式
         editView.isEditView = true
+        //展示模式
         showView.isEditView = false
 
         editView.maxHeightCalOutClosure = {[unowned self] maxH  in
@@ -31,7 +34,6 @@ class ViewController: UIViewController {
         
         editView.addBtnClosure = {
            
-            return SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
         }
         
         showView.photoModels = [
