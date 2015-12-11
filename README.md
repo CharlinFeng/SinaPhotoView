@@ -53,6 +53,7 @@
 <br/><br/>
 #### 3. 编辑模式下，点击添加按钮，请在closure中返回图片数据：请执行您的相册选取操作
 注：interfaceModel 为app项目模型指针，比如你有自己的模式，可直接填入，后期回调将非常容易获取数据。
+
         editView.addBtnClosure = {
            
             return SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
