@@ -20,8 +20,10 @@
 >. 针对tableview以及collectionView做了大量性能优化。<br/> 
 >. 支持事件回调。<br/> 
 
-
-注：请直接拖拽SinaPhotoView文件夹到你的项目即可，不支持pod。
+<br/> <br/> 
+#### 注：请直接拖拽SinaPhotoView文件夹到你的项目即可，不支持pod。
+####  请注意照片为1，4，其他数量展示方式以及sinaPhotoView的整体的高度变化。
+<br/> <br/> 
 
 ![image](https://github.com/CharlinFeng/Resource/blob/master/SinaPhotoView/1.gif)<br />
 
