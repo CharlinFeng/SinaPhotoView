@@ -24,7 +24,7 @@ extension SinaPhotoView {
 
 
 class SinaPhotoView: UIView {
-
+    
     /** interface */
     var isEditView: Bool! {didSet{sinaPhotoViewPrepare()}}
     var addBtnClosure:(Void->Void)!
@@ -34,8 +34,10 @@ class SinaPhotoView: UIView {
         set{photoModels_private = newValue; }
     }
     var tapClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
-    func addPhotoModels(photoModels: [PhotoModel]!){for (_,pm) in photoModels.enumerate(){addImageView(false, photoModel: pm)}}
-
+    func addPhotoModels(photoModels: [PhotoModel]!){
+        for (_,pm) in photoModels.enumerate(){print(photoModels.count) ;if photoModels.count >= 9 {return} ;addImageView(false, photoModel: pm)}
+    }
+    
     lazy var margin: CGFloat = 5
     lazy var colCount: CGFloat = 3
     
@@ -52,7 +54,7 @@ extension SinaPhotoView {
         layer.borderWidth=0.5; layer.borderColor = UIColor.brownColor().CGColor
         
         if !isEditView {for (var i=0; i<9; i++){addImageView(true,photoModel: nil)}; return}
-
+        
         addBtn.tintColor = UIColor.lightGrayColor() ; addBtn.setImage(UIImage(named: "SinaPhotoView.bundle/add"), forState: UIControlState.Normal)
         addBtn.addTarget(self, action: "clickAddBtn", forControlEvents: UIControlEvents.TouchUpInside)
         addSubview(addBtn)
@@ -70,6 +72,8 @@ extension SinaPhotoView {
     /** add */
     func addImageView(isShowView: Bool = false, photoModel: PhotoModel!){
         
+        if photoModels.count >= 9 {return}
+        
         if (isEditView!) {handleAddBtn()};
         let imageView = PhotoImgView();
         imageView.userInteractionEnabled=true
@@ -81,7 +85,7 @@ extension SinaPhotoView {
         imageView.layer.borderWidth=1
         addSubview(imageView)
         if isEditView! {addDeleteBtn(imageView)}else{imageView.hidden = true}
-    
+        
     }
     
     func tap(tap: UITapGestureRecognizer){
@@ -106,7 +110,6 @@ extension SinaPhotoView {
         photoModels_private.removeAtIndex(i)
         deleteBtn.superview?.removeFromSuperview()
         deleteBtn.removeFromSuperview()
-        addBtnClosure?()
         handleAddBtn()
     }
     
@@ -125,7 +128,7 @@ extension SinaPhotoView {
         if !isEditView! && (photoModels.count == 4) {wh = (totalWH - margin) / 2; colCount_Cal = 2}
         if !isEditView! && (photoModels.count == 1) {wh = totalWH; colCount_Cal = 1}
         for (var i=0; i<count; i++){
-          
+            
             weak var subView = subviews.reverse()[i]
             subView?.tag = i
             let row: CGFloat = CGFloat(Int(CGFloat(i) % colCount_Cal))
