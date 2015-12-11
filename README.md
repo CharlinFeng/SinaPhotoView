@@ -22,7 +22,7 @@
 
 <br/> <br/> 
 #### 注：请直接拖拽SinaPhotoView文件夹到你的项目即可，不支持pod。
-####  请注意照片为1，4，其他数量展示方式以及sinaPhotoView的整体的高度变化。
+####  请注意照片为1，4，其他数量时的展示方式以及对应的sinaPhotoView的整体的高度变化。
 <br/> <br/> 
 
 ![image](https://github.com/CharlinFeng/Resource/blob/master/SinaPhotoView/1.gif)<br />
