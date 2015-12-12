@@ -11,10 +11,13 @@ import UIKit
 extension SinaPhotoView {
     
     class PhotoModel {
+        
         var img: UIImage!
+        var imgUrl: String!
         /** 业务模型指针 */
         var interfaceModel: AnyObject!
         init(img: UIImage!, interfaceModel: AnyObject!){self.img = img; self.interfaceModel = interfaceModel}
+        init(imgUrl: String!, interfaceModel: AnyObject!){self.imgUrl = imgUrl; self.interfaceModel = interfaceModel}
     }
     
     class PhotoImgView: UIImageView {
@@ -51,7 +54,6 @@ extension SinaPhotoView {
     /** addBtn */
     private func sinaPhotoViewPrepare(){
         
-        layer.borderWidth=0.5; layer.borderColor = UIColor.brownColor().CGColor
         
         if !isEditView {for (var i=0; i<9; i++){addImageView(true,photoModel: nil)}; return}
         
@@ -79,10 +81,9 @@ extension SinaPhotoView {
         imageView.userInteractionEnabled=true
         imageView.photoModel = photoModel
         imageView.image = photoModel?.img
-        if isEditView! {photoModels_private.append(photoModel)}
+        if isEditView! {photoModels_private.append(photoModel)}else{ /** 请在此加载网络图片 */}
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
-        imageView.layer.borderWidth=1
         addSubview(imageView)
         if isEditView! {addDeleteBtn(imageView)}else{imageView.hidden = true}
         
