@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         }
         
         editView.addBtnClosure = {
-           print("请自行完成相册选取控制器的集成")
+           self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
         }
         
         showView.photoModels = [
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-//        print(editView.photoModels.count)
+        print(editView.photoModels.count)
     }
 
 
