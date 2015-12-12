@@ -38,7 +38,8 @@ class SinaPhotoView: UIView {
     }
     var tapClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
     func addPhotoModels(photoModels: [PhotoModel]!){
-        for (_,pm) in photoModels.enumerate(){print(photoModels.count) ;if photoModels.count >= 9 {return} ;addImageView(false, photoModel: pm)}
+        photoModels_private.removeAll()
+        for (_,pm) in photoModels.enumerate(){if photoModels.count >= 9 {return} ;addImageView(false, photoModel: pm)}
     }
     
     lazy var margin: CGFloat = 5
@@ -81,12 +82,16 @@ extension SinaPhotoView {
         imageView.userInteractionEnabled=true
         imageView.photoModel = photoModel
         imageView.image = photoModel?.img
-        if isEditView! {photoModels_private.append(photoModel)}else{ /** 请在此加载网络图片 */}
+        if photoModel != nil {photoModels_private.append(photoModel)}
+        if !isEditView! {}
+        
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
         addSubview(imageView)
-        if isEditView! {addDeleteBtn(imageView)}else{imageView.hidden = true}
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = UIColor.redColor()
         
+        if isEditView! {addDeleteBtn(imageView)}else{imageView.hidden = true}
     }
     
     func tap(tap: UITapGestureRecognizer){
@@ -131,6 +136,7 @@ extension SinaPhotoView {
         for (var i=0; i<count; i++){
             
             weak var subView = subviews.reverse()[i]
+            
             subView?.tag = i
             let row: CGFloat = CGFloat(Int(CGFloat(i) % colCount_Cal))
             let col: CGFloat = CGFloat(Int(CGFloat(i) / colCount_Cal))
@@ -141,9 +147,13 @@ extension SinaPhotoView {
             var maxH = CGRectGetMaxY(frame)
             
             if !isEditView!{
-                if photoModels != nil || photoModels.count == 0 {
+                subView?.hidden = true
+                if photoModels != nil && photoModels.count > 0 {
+                    
                     subView!.hidden = i > photoModels.count - 1
                     if i == photoModels.count - 1 {maxH = CGRectGetMaxY(subView!.frame);maxHeightCalOutClosure?(maxH)}
+                }else{
+                    subView?.hidden = true
                 }
                 subView!.contentMode = photoModels.count == 1 ? UIViewContentMode.ScaleAspectFit : UIViewContentMode.ScaleAspectFill
             }
