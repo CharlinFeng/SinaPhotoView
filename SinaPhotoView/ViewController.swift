@@ -33,14 +33,14 @@ class ViewController: UIViewController {
         }
         
         editView.addBtnClosure = {
-           
+           print("请自行完成相册选取控制器的集成")
         }
         
         showView.photoModels = [
-            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
-            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
-            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
-            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
+//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
+//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
+//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
+//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
         ]
         showView.maxHeightCalOutClosure = {[unowned self] maxH  in
             self.showViewHC.constant = maxH

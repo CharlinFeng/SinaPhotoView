@@ -78,7 +78,7 @@ extension SinaPhotoView {
         let imageView = PhotoImgView();
         imageView.userInteractionEnabled=true
         imageView.photoModel = photoModel
-        imageView.image = photoModel.img
+        imageView.image = photoModel?.img
         if isEditView! {photoModels_private.append(photoModel)}
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
@@ -146,7 +146,7 @@ extension SinaPhotoView {
                 }
                 subView!.contentMode = photoModels.count == 1 ? UIViewContentMode.ScaleAspectFit : UIViewContentMode.ScaleAspectFill
             }
-            
+            if !isEditView! && count == 0 && i<10 {maxHeightCalOutClosure?(0)}
             if isEditView! && i == count - 1 && i<10 {maxHeightCalOutClosure?(maxH)}
         }
     }
