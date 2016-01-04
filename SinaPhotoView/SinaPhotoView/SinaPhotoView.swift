@@ -32,30 +32,38 @@ class SinaPhotoView: UIView {
     /** interface */
     var isEditView: Bool! {didSet{sinaPhotoViewPrepare()}}
     var addBtnClosure:(Void->Void)!
-    var maxHeightCalOutClosure:(CGFloat->Void)!
+    var deleteBtnClosure:(Void->Void)!
+    var maxSizeCalOutClosure:(CGSize->Void)!
     var photoModels: [PhotoModel]! {
         get{
-            if !isEditView! {return photoModels_private.filter({$0 != nil})}
+            if is_ShowView {return photoModels_private.filter({$0 != nil})}
             
             let imageViews = subviews.filter({$0.isKindOfClass(PhotoImgView)}) as! [PhotoImgView]
             
             return imageViews.map({$0.photoModel})
         }
-        set{photoModels_private = newValue; }
+        set{
+            photoModels_private = newValue;
+            setNeedsLayout()
+            layoutIfNeeded()
+        }
     }
     var tapClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
     func addPhotoModels(photoModels: [PhotoModel]!){
         photoModels_private = photoModels
-        setNeedsLayout()
-        layoutIfNeeded()
+        photoModelsDataCommingForShow()
     }
+    
+    var is_EditView: Bool {return isEditView}
+    var is_ShowView: Bool {return !isEditView}
     
     lazy var margin: CGFloat = 5
     lazy var colCount: CGFloat = 3
     
     var count: Int {return subviews.count}
     lazy var addBtn: UIButton = UIButton(type: UIButtonType.System)
-    private var photoModels_private: [PhotoModel] = []{didSet{photoModelsKVO()}}
+    private var photoModels_private: [PhotoModel] = []
+    private var defaultWH: CGFloat = 0
 }
 
 extension SinaPhotoView {
@@ -63,41 +71,48 @@ extension SinaPhotoView {
     /** addBtn */
     private func sinaPhotoViewPrepare(){
         
-        
-        if !isEditView {for (var i=0; i<9; i++){addImageView(true,photoModel: nil)}; return}
-        
-        addBtn.tintColor = UIColor.lightGrayColor() ; addBtn.setImage(UIImage(named: "SinaPhotoView.bundle/add"), forState: UIControlState.Normal)
-        addBtn.addTarget(self, action: "clickAddBtn", forControlEvents: UIControlEvents.TouchUpInside)
-        addSubview(addBtn)
+        if is_EditView {
+            
+            addBtn.tintColor = UIColor.lightGrayColor() ; addBtn.setImage(UIImage(named: "SinaPhotoView.bundle/add"), forState: UIControlState.Normal)
+            addBtn.addTarget(self, action: "clickAddBtn", forControlEvents: UIControlEvents.TouchUpInside)
+            addSubview(addBtn)
+            
+        }else{
+            
+            for (var i=0; i<9; i++){addImageView(is_ShowView: true,photoModel: nil)}
+        }
     }
     
-    private func photoModelsKVO(){
-        if isEditView! {return}
-        setNeedsLayout()
-        layoutIfNeeded()
+    private func photoModelsDataCommingForShow(){
+        
+        for (var i=0; i<photoModels_private.count; i++){addImageView(is_ShowView: false,photoModel: photoModels_private[i])}
     }
+    
+    
+    
+    
     
     /** 点击事件 */
     func clickAddBtn(){addBtnClosure?()}
     
     /** add */
-    func addImageView(isShowView: Bool = false, photoModel: PhotoModel!){
+    func addImageView(is_ShowView is_ShowView: Bool = false, photoModel: PhotoModel!){
         
-        if photoModels.count >= (isEditView! ? 10 : 9) {return}
+        if photoModels.count >= (is_EditView ? 10 : 9) {return}
         
-        if (isEditView!) {handleAddBtn()};
+        if (is_EditView) {handleAddBtn()};
         let imageView = PhotoImgView();
         imageView.userInteractionEnabled=true
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.photoModel = photoModel
         imageView.image = photoModel?.img
-        if photoModel != nil {photoModels_private.append(photoModel)}
-//        imageView.backgroundColor = rgb(0, g: 0, b: 0, a: 0.1)
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
         addSubview(imageView)
+        if is_EditView {bringSubviewToFront(addBtn)}
+        imageView.layer.borderWidth = 1
         imageView.clipsToBounds = true
-        if isEditView! {addDeleteBtn(imageView)}else{imageView.hidden = true}
+        if is_EditView {addDeleteBtn(imageView)}else{imageView.hidden = true}
     }
     
     func tap(tap: UITapGestureRecognizer){
@@ -105,8 +120,6 @@ extension SinaPhotoView {
         let imageView = tap.view as! PhotoImgView
         
         let i = imageView.index
-        
-        print("---------\(photoModels.count): \(i)")
         
         tapClosure?(i: i, imageView: imageView, photoModel: imageView.photoModel)
     }
@@ -118,40 +131,64 @@ extension SinaPhotoView {
         imageView.addSubview(deleteBtn)
     }
     
-    
     func deleteItemImageView(deleteBtn: UIButton){
         
-        let imageView = deleteBtn.superview as! PhotoImgView
+        if is_ShowView {return}
         
         deleteBtn.superview?.removeFromSuperview()
+        
         deleteBtn.removeFromSuperview()
+        
         handleAddBtn()
+        
+        deleteBtnClosure?()
     }
     
-    
-    
-    private func handleAddBtn(){if count==9 {addBtn.removeFromSuperview()} else{insertSubview(addBtn, atIndex: 0)}}
+    private func handleAddBtn(){if count==9 {addBtn.removeFromSuperview()} else{insertSubview(addBtn, atIndex: 9)}}
     
     override func layoutSubviews() {
         
         super.layoutSubviews()
         
-        assert(isEditView != nil, "Charlin Feng提示您: 请设置isEditView值。")
-        
-        if count == 0 {self.hidden = true; return}else{self.hidden = false}
+        if defaultWH == 0 {defaultWH = bounds.size.width}
         
         cal()
+        
+        if count == 0 {
+            self.hidden = true;
+            return
+        }else{
+            self.hidden = false
+            assert(isEditView != nil, "Charlin Feng提示您: 请设置isEditView值。")
+        }
+        
+        layer.borderColor = UIColor.grayColor().CGColor
+        layer.borderWidth = 2
     }
     
     func cal(){
         
-        if count == 0 {self.hidden = true; return}else{self.hidden = false}
         
-        let totalWH: CGFloat = bounds.size.width
+            if is_ShowView && photoModels.count == 0 {
+                maxSizeCalOutClosure?(CGSizeZero)
+            }
+
+        
+        let totalWH: CGFloat = defaultWH
+      
+        if is_EditView && count == 1 {
+            maxSizeCalOutClosure?(CGSizeMake(CGFloat(Int(totalWH/3)), CGFloat(Int(totalWH/3))));
+        }
+        
         var wh: CGFloat = (totalWH - (colCount - 1) * margin) / colCount
         var colCount_Cal = colCount
-        if !isEditView! && (photoModels.count == 4) {wh = (totalWH - margin) / 2; colCount_Cal = 2}
-        if !isEditView! && (photoModels.count == 1) {wh = totalWH; colCount_Cal = 1}
+        
+        
+        if is_ShowView && (photoModels.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
+        if is_ShowView && (photoModels.count == 1) {wh = (defaultWH / 3).int_float(); colCount_Cal = 1}
+        
+        
+        
         
         for (var i=0; i<count; i++){
             
@@ -167,11 +204,23 @@ extension SinaPhotoView {
             let y = col * (wh + margin)
             let frame = CGRectMake(x, y, wh, wh)
             
-            if isEditView! && i == count - 1 && subView!.isKindOfClass(UIButton){UIView.animateWithDuration(0.1, animations: {subView?.frame = frame})}else{subView?.frame = frame}
+            if is_EditView && i == count - 1 && subView!.isKindOfClass(UIButton){
+                
+                UIView.animateWithDuration(0.1, animations: {
+                    subView?.frame = frame}
+                )
+                
+            }else{
+                
+                subView?.frame = frame
+            }
             
-            var maxH = CGRectGetMaxY(frame)
+            var maxW: CGFloat = CGRectGetMaxX(frame).int_float()
+            var maxH: CGFloat = CGRectGetMaxY(frame).int_float()
             
-            if !isEditView!{
+        
+            
+            if is_ShowView{
                 
                 subView?.hidden = true
                 
@@ -181,14 +230,39 @@ extension SinaPhotoView {
                     
                     imageView?.hidden = i > photoModels.count - 1
                     
-                    if i == photoModels.count - 1 {maxH = CGRectGetMaxY(subView!.frame);maxHeightCalOutClosure?(maxH)}
+                    let pc = photoModels.count
                     
-//                    if i < photoModels.count {imageView?.imageWithUrl(photoModels[i].imgUrl.resourceURL, placeHolderImage: nil)}
+                    if i == pc - 1 {
+                        
+                        maxW = CGFloat(Int(CGRectGetMaxX(subView!.frame)))
+                        maxH = CGFloat(Int(CGRectGetMaxY(subView!.frame)))
+                        if pc == 4 {maxW = wh * 2 + margin}
+                        if pc > 4 && pc <= 6 {maxW = defaultWH}
+                        if pc >= 7 && pc <= 9 {maxW = defaultWH}
+                        
+                        maxSizeCalOutClosure?(CGSizeMake(maxW, maxH))
+                    }
                     
                 }
+                
+                
+            }else {
+                
+                let pc = photoModels.count
+                if pc >= 3 && pc <= 5 {maxW = defaultWH }
+                if pc >= 6 && pc <= 8 {maxW = defaultWH}
+                if i == count - 1 && i<10 && i > 0 {maxSizeCalOutClosure?(CGSizeMake(maxW, maxH));}
             }
-            if !isEditView! && count == 0 && i<10 {maxHeightCalOutClosure?(0)}
-            if isEditView! && i == count - 1 && i<10 {maxHeightCalOutClosure?(maxH)}
+            
+            
         }
     }
+    
+    
+}
+
+extension CGFloat {
+
+    func int_float()->CGFloat{return CGFloat(Int(self))}
+    
 }
