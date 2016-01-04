@@ -44,9 +44,11 @@
         
 <br/><br/>
 
-####2. 获取动态高度回调，更新约束
-        editView.maxHeightCalOutClosure = {[unowned self] maxH  in
-            self.editViewHC.constant = maxH
+####2. 获取动态size回调，更新约束
+        editView.maxSizeCalOutClosure = {[unowned self] size  in
+  
+            self.editViewWC.constant = size.width
+            self.editViewHC.constant = size.height
         }
         
 
