@@ -2,7 +2,7 @@
 ![image](https://github.com/CharlinFeng/Resource/blob/master/SinaPhotoView/logo.png)<br />
 
 <br/><br/><br/>
-朋友圈相册视图（edit、show）
+朋友圈相册视图（edit、show) [请关注信息公告牌](https://github.com/CharlinFeng/Show)
 ===============
 <br/>
 
