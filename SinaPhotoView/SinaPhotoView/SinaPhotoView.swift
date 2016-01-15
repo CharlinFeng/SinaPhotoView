@@ -82,6 +82,9 @@ class SinaPhotoView: UIView {
     
     /** 展示图片回调 */
     var setImagesWithClosure:((String!,UIImageView!)->Void)!
+    
+    /** 是否关闭特殊的4张时的两行模式 */
+    var shutOffTwoColModel_Show: Bool = false
 }
 
 extension SinaPhotoView {
@@ -217,7 +220,7 @@ extension SinaPhotoView {
         var colCount_Cal = colCount
         
         
-        //        if is_ShowView && (photoModels.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
+        if !shutOffTwoColModel_Show && is_ShowView && (photoModels.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
         if is_ShowView && (photoModels.count == 1) {wh = (defaultWH / 3).int_float(); colCount_Cal = 1}
         
         
@@ -252,7 +255,6 @@ extension SinaPhotoView {
             var maxH: CGFloat = CGRectGetMaxY(frame).int_float()
             
             
-            
             if is_ShowView{
                 
                 subView?.hidden = true
@@ -261,8 +263,6 @@ extension SinaPhotoView {
                 
                 if photoModels != nil && photoModels.count > 0 {
                     
-                    
-                    //                    if i < photoModels.count {imageView?.imageWithUrl(photoModels[i].imgUrl, placeHolderImage: nil)}
                     if i < photoModels.count {setImagesWithClosure?(photoModels[i].imgUrl,imageView)}
                     
                     imageView?.hidden = i > photoModels.count - 1
@@ -273,7 +273,7 @@ extension SinaPhotoView {
                         
                         maxW = CGFloat(Int(CGRectGetMaxX(subView!.frame)))
                         maxH = CGFloat(Int(CGRectGetMaxY(subView!.frame)))
-                        //                        if pc == 4 {maxW = wh * 2 + margin}
+                        if !shutOffTwoColModel_Show && pc == 4 {maxW = wh * 2 + margin}
                         if pc > 4 && pc <= 6 {maxW = defaultWH}
                         if pc >= 7 && pc <= 9 {maxW = defaultWH}
                         
