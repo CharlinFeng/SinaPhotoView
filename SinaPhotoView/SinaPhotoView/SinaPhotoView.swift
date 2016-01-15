@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 extension SinaPhotoView {
     
     class PhotoModel {
@@ -24,15 +25,29 @@ extension SinaPhotoView {
         var photoModel: PhotoModel!
         var index: Int = 0
     }
+    
+    /** 朋友圈视图模式 */
+    enum Model {
+        
+        /** 展示 */
+        case Show
+        
+        /** 本地编辑 */
+        case LocalEdit
+        
+        /** 网络数据编辑 */
+        case NetworkEdit
+    }
+    
 }
 
 
 class SinaPhotoView: UIView {
     
     /** interface */
-    var isEditView: Bool! {didSet{sinaPhotoViewPrepare()}}
+    var model: Model!{didSet{sinaPhotoViewPrepare()}}
     var addBtnClosure:(Void->Void)!
-    var deleteBtnClosure:(Void->Void)!
+    var deleteBtnClosure:((i: Int, interfaceModel: AnyObject!, photoImageView: PhotoImgView!)->Void)!
     var maxSizeCalOutClosure:(CGSize->Void)!
     var photoModels: [PhotoModel]! {
         get{
@@ -48,14 +63,14 @@ class SinaPhotoView: UIView {
             layoutIfNeeded()
         }
     }
-    var tapClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
+    var clickClosure: ((i: Int, imageView: PhotoImgView!, photoModel: PhotoModel!)->Void)!
     func addPhotoModels(photoModels: [PhotoModel]!){
         photoModels_private = photoModels
         photoModelsDataCommingForShow()
     }
     
-    var is_EditView: Bool {return isEditView}
-    var is_ShowView: Bool {return !isEditView}
+    private var is_EditView: Bool {return model != Model.Show}
+    private var is_ShowView: Bool {return model == Model.Show}
     
     lazy var margin: CGFloat = 5
     lazy var colCount: CGFloat = 3
@@ -64,6 +79,9 @@ class SinaPhotoView: UIView {
     lazy var addBtn: UIButton = UIButton(type: UIButtonType.System)
     private var photoModels_private: [PhotoModel] = []
     private var defaultWH: CGFloat = 0
+    
+    /** 展示图片回调 */
+    var setImagesWithClosure:((String!,UIImageView!)->Void)!
 }
 
 extension SinaPhotoView {
@@ -100,12 +118,17 @@ extension SinaPhotoView {
         
         if photoModels.count >= (is_EditView ? 10 : 9) {return}
         
-        if (is_EditView) {handleAddBtn()};
         let imageView = PhotoImgView();
         imageView.userInteractionEnabled=true
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.photoModel = photoModel
-        imageView.image = photoModel?.img
+        
+        if model == Model.LocalEdit {
+            imageView.image = photoModel?.img
+        }else if model == Model.NetworkEdit {
+            setImagesWithClosure?(photoModel?.imgUrl,imageView)
+        }
+        
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
         addSubview(imageView)
@@ -113,6 +136,7 @@ extension SinaPhotoView {
         imageView.layer.borderWidth = 1
         imageView.clipsToBounds = true
         if is_EditView {addDeleteBtn(imageView)}else{imageView.hidden = true}
+        if (is_EditView) {handleAddBtn(true)};
     }
     
     func tap(tap: UITapGestureRecognizer){
@@ -121,7 +145,7 @@ extension SinaPhotoView {
         
         let i = imageView.index
         
-        tapClosure?(i: i, imageView: imageView, photoModel: imageView.photoModel)
+        clickClosure?(i: i, imageView: imageView, photoModel: imageView.photoModel)
     }
     
     func addDeleteBtn(imageView: UIImageView){
@@ -135,20 +159,32 @@ extension SinaPhotoView {
         
         if is_ShowView {return}
         
-        deleteBtn.superview?.removeFromSuperview()
+        let photoImageV = deleteBtn.superview as! PhotoImgView
         
-        deleteBtn.removeFromSuperview()
+        if model == Model.LocalEdit {
+            
+            photoImageV.removeFromSuperview()
+        }
         
-        handleAddBtn()
+        handleAddBtn(false)
         
-        deleteBtnClosure?()
+        deleteBtnClosure?(i: photoImageV.index, interfaceModel: photoImageV.photoModel.interfaceModel,photoImageView: photoImageV)
     }
     
-    private func handleAddBtn(){if count==9 {addBtn.removeFromSuperview()} else{insertSubview(addBtn, atIndex: 9)}}
+    private func handleAddBtn(isAdd: Bool){
+        
+        let piv = subviews.filter({$0.isKindOfClass(PhotoImgView)})
+        
+        if piv.count >= 9 {addBtn.removeFromSuperview()} else{insertSubview(addBtn, atIndex: piv.count)}
+        
+        if !isAdd && count == 9 {insertSubview(addBtn, atIndex: 9)}
+    }
     
     override func layoutSubviews() {
         
         super.layoutSubviews()
+        
+        clipsToBounds = true
         
         if defaultWH == 0 {defaultWH = bounds.size.width}
         
@@ -159,23 +195,20 @@ extension SinaPhotoView {
             return
         }else{
             self.hidden = false
-            assert(isEditView != nil, "Charlin Feng提示您: 请设置isEditView值。")
+            assert(model != nil, "Charlin Feng提示您: 请设置isEditView值。")
         }
-        
-        layer.borderColor = UIColor.grayColor().CGColor
-        layer.borderWidth = 2
     }
     
     func cal(){
         
         
-            if is_ShowView && photoModels.count == 0 {
-                maxSizeCalOutClosure?(CGSizeZero)
-            }
-
+        if is_ShowView && photoModels.count == 0 {
+            maxSizeCalOutClosure?(CGSizeZero)
+        }
+        
         
         let totalWH: CGFloat = defaultWH
-      
+        
         if is_EditView && count == 1 {
             maxSizeCalOutClosure?(CGSizeMake(CGFloat(Int(totalWH/3)), CGFloat(Int(totalWH/3))));
         }
@@ -184,7 +217,7 @@ extension SinaPhotoView {
         var colCount_Cal = colCount
         
         
-        if is_ShowView && (photoModels.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
+        //        if is_ShowView && (photoModels.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
         if is_ShowView && (photoModels.count == 1) {wh = (defaultWH / 3).int_float(); colCount_Cal = 1}
         
         
@@ -218,7 +251,7 @@ extension SinaPhotoView {
             var maxW: CGFloat = CGRectGetMaxX(frame).int_float()
             var maxH: CGFloat = CGRectGetMaxY(frame).int_float()
             
-        
+            
             
             if is_ShowView{
                 
@@ -228,6 +261,10 @@ extension SinaPhotoView {
                 
                 if photoModels != nil && photoModels.count > 0 {
                     
+                    
+                    //                    if i < photoModels.count {imageView?.imageWithUrl(photoModels[i].imgUrl, placeHolderImage: nil)}
+                    if i < photoModels.count {setImagesWithClosure?(photoModels[i].imgUrl,imageView)}
+                    
                     imageView?.hidden = i > photoModels.count - 1
                     
                     let pc = photoModels.count
@@ -236,7 +273,7 @@ extension SinaPhotoView {
                         
                         maxW = CGFloat(Int(CGRectGetMaxX(subView!.frame)))
                         maxH = CGFloat(Int(CGRectGetMaxY(subView!.frame)))
-                        if pc == 4 {maxW = wh * 2 + margin}
+                        //                        if pc == 4 {maxW = wh * 2 + margin}
                         if pc > 4 && pc <= 6 {maxW = defaultWH}
                         if pc >= 7 && pc <= 9 {maxW = defaultWH}
                         
@@ -259,10 +296,14 @@ extension SinaPhotoView {
     }
     
     
+    func removeAllItems_When_NetworkEdit(){
+        subviews.forEach({if $0.isKindOfClass(PhotoImgView) {$0.removeFromSuperview()}})
+    }
+    
 }
 
 extension CGFloat {
-
+    
     func int_float()->CGFloat{return CGFloat(Int(self))}
     
 }

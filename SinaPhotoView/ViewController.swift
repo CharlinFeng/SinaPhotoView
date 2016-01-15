@@ -37,7 +37,8 @@ class ViewController: UIViewController {
     
     func editViewPrepare(){
         
-     editView.isEditView = true
+        //展示模式
+        showView.model = SinaPhotoView.Model.LocalEdit
         
         editView.maxSizeCalOutClosure = {[unowned self] size  in
   
@@ -50,13 +51,6 @@ class ViewController: UIViewController {
             self.showView.photoModels = self.editView.photoModels
         }
         
-        editView.deleteBtnClosure = {
-            self.showView.photoModels = self.editView.photoModels
-        }
-        
-        editView.tapClosure = {(i,v,m) in
-         
-        }
     }
     
     
@@ -70,7 +64,7 @@ class ViewController: UIViewController {
     func showViewPrepare(){
         
         //展示模式
-        showView.isEditView = false
+        showView.model = SinaPhotoView.Model.Show
         
         showView.photoModels = [
             
@@ -84,11 +78,6 @@ class ViewController: UIViewController {
             print(size)
             self.showViewWC.constant = size.width
             self.showViewHC.constant = size.height
-        }
-        
-        
-        showView.tapClosure = {(i,v,m) in
-     
         }
     }
 }
