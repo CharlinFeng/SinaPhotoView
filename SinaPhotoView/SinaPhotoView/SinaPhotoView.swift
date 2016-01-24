@@ -263,7 +263,7 @@ extension SinaPhotoView {
                 
                 if photoModels != nil && photoModels.count > 0 {
                     
-                    if i < photoModels.count {setImagesWithClosure?(photoModels[i].imgUrl,imageView)}
+                    if i < photoModels.count {imageView?.photoModel = photoModels[i] ;setImagesWithClosure?(photoModels[i].imgUrl,imageView)}
                     
                     imageView?.hidden = i > photoModels.count - 1
                     
