@@ -26,9 +26,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+//
         editViewPrepare()
-
+//
         showViewPrepare()
 
     }
@@ -37,8 +37,11 @@ class ViewController: UIViewController {
     
     func editViewPrepare(){
         
+        editView.layer.borderColor = UIColor(white: 0.4, alpha: 0.2).CGColor
+        editView.layer.borderWidth = 0.5
+        
         //展示模式
-        showView.model = SinaPhotoView.Model.LocalEdit
+        editView.model = SinaPhotoView.Model.LocalEdit
         
         editView.maxSizeCalOutClosure = {[unowned self] size  in
   
@@ -49,10 +52,23 @@ class ViewController: UIViewController {
         editView.addBtnClosure = {
             self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
             self.showView.photoModels = self.editView.photoModels
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { () -> Void in
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.editView.addPhotoModels([SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)])
+                self.showView.photoModels = self.editView.photoModels
+            })
         }
         
     }
-    
+
     
     
 
@@ -68,10 +84,10 @@ class ViewController: UIViewController {
         
         showView.photoModels = [
             
-//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
-//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
-//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
-//            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
+            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
+            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
+            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil),
+            SinaPhotoView.PhotoModel(img: nil, interfaceModel: nil)
         ]
         
         showView.maxSizeCalOutClosure = {[unowned self] size  in

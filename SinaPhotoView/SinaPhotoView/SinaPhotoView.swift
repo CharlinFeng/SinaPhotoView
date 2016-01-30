@@ -93,8 +93,8 @@ extension SinaPhotoView {
     private func sinaPhotoViewPrepare(){
         
         if is_EditView {
-            
             addBtn.tintColor = UIColor.lightGrayColor() ; addBtn.setImage(UIImage(named: "SinaPhotoView.bundle/add"), forState: UIControlState.Normal)
+            addBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
             addBtn.addTarget(self, action: "clickAddBtn", forControlEvents: UIControlEvents.TouchUpInside)
             addSubview(addBtn)
             
@@ -120,6 +120,7 @@ extension SinaPhotoView {
     func addImageView(is_ShowView is_ShowView: Bool = false, photoModel: PhotoModel!){
         
         if photoModels.count >= (is_EditView ? 10 : 9) {return}
+        if subviews.filter({!$0.isKindOfClass(UIButton)}).count >= 9{return}
         
         let imageView = PhotoImgView();
         imageView.userInteractionEnabled=true
@@ -187,7 +188,7 @@ extension SinaPhotoView {
         
         super.layoutSubviews()
         
-        clipsToBounds = true
+        if model == nil {return}
         
         if defaultWH == 0 {defaultWH = bounds.size.width}
         
@@ -286,7 +287,7 @@ extension SinaPhotoView {
             }else {
                 
                 let pc = photoModels.count
-                if pc >= 3 && pc <= 5 {maxW = defaultWH }
+                if pc >= 3 && pc <= 5 {maxW = defaultWH}
                 if pc >= 6 && pc <= 8 {maxW = defaultWH}
                 if i == count - 1 && i<10 && i > 0 {maxSizeCalOutClosure?(CGSizeMake(maxW, maxH));}
             }
