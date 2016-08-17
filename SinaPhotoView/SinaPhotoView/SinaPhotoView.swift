@@ -51,7 +51,7 @@ class SinaPhotoView: UIView {
     var maxSizeCalOutClosure:(CGSize->Void)!
     var photoModels: [PhotoModel]! {
         get{
-            if is_ShowView {return photoModels_private.filter({$0 != nil})}
+            if is_ShowView {return photoModels_private?.filter({$0 != nil})}
             
             let imageViews = subviews.filter({$0.isKindOfClass(PhotoImgView)}) as! [PhotoImgView]
             
@@ -77,7 +77,7 @@ class SinaPhotoView: UIView {
     
     var count: Int {return subviews.count}
     lazy var addBtn: UIButton = UIButton(type: UIButtonType.System)
-    private var photoModels_private: [PhotoModel] = []
+    private var photoModels_private: [PhotoModel]! = []
     private var defaultWH: CGFloat = 0
     
     /** 展示图片回调 */
@@ -137,7 +137,7 @@ extension SinaPhotoView {
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap:"))
         addSubview(imageView)
         if is_EditView {bringSubviewToFront(addBtn)}
-        imageView.layer.borderWidth = 1
+        //        imageView.layer.borderWidth = 1
         imageView.clipsToBounds = true
         if is_EditView {addDeleteBtn(imageView)}else{imageView.hidden = true}
         if (is_EditView) {handleAddBtn(true)};
@@ -206,7 +206,7 @@ extension SinaPhotoView {
     func cal(){
         
         
-        if is_ShowView && photoModels.count == 0 {
+        if is_ShowView && photoModels?.count == 0 {
             maxSizeCalOutClosure?(CGSizeZero)
         }
         
@@ -221,8 +221,8 @@ extension SinaPhotoView {
         var colCount_Cal = colCount
         
         
-        if !shutOffTwoColModel_Show && is_ShowView && (photoModels.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
-        if is_ShowView && (photoModels.count == 1) {wh = (defaultWH / 3).int_float(); colCount_Cal = 1}
+        if !shutOffTwoColModel_Show && is_ShowView && (photoModels?.count == 4) {wh = ((totalWH - margin) / 3).int_float(); colCount_Cal = 2}
+        if is_ShowView && (photoModels?.count == 1) {wh = (defaultWH / 3).int_float(); colCount_Cal = 1}
         
         
         
